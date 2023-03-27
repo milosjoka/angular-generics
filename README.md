@@ -8,9 +8,9 @@ Some benefits:
 - Type safety
 - Less code and code is more easily reused
 
-In this project you will see:
+In this project you will see examples:
 - generic data(CRUD) service
-- generic BaseFormComponent. 
+- generic BaseFormComponent and BaseIndexComponent. 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 
