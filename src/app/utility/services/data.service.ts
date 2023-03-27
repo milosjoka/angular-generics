@@ -4,9 +4,10 @@ import {Observable} from "rxjs";
 import {PaginationResponse} from "../data-models/responses/pagination-response.model";
 import {environment} from "../../../environments/environment";
 import {ItemResponse} from "../data-models/responses/item-response.model";
+import {SearchCriteria} from "../generic-components/base-index.component";
 
 export interface IDataService<T> {
-  findByCriteria(searchParamCriteria: string): Observable<PaginationResponse<T>>;
+  findByCriteria(searchCriteria: SearchCriteria): Observable<PaginationResponse<T>>;
   getById(id: number): Observable<ItemResponse<T>>;
   create(model: T): Observable<ItemResponse<T>>;
   update(model: T): Observable<ItemResponse<T>>;
@@ -24,10 +25,10 @@ export class DataService<T extends { id: number; }> implements IDataService<T> {
   constructor(protected http: HttpClient) {
   }
 
-  findByCriteria(searchParamCriteria: string): Observable<PaginationResponse<T>> {
+  findByCriteria(searchCriteria: SearchCriteria): Observable<PaginationResponse<T>> {
     return this.http.post<PaginationResponse<T>>(`${environment.apiUrl}${this.endpoint}/find`,
       {
-        searchCriteria: searchParamCriteria
+        searchCriteria: searchCriteria
       }
     );
   }
