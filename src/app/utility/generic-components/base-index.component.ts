@@ -1,6 +1,6 @@
 import {OnDestroy, OnInit} from "@angular/core";
 import {Subject, takeUntil} from "rxjs";
-import {DataService} from "../services/data.service";
+import {IDataService} from "../services/data.service";
 
 export interface SearchCriteria {
   offset: number;
@@ -29,8 +29,7 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   protected messageDeleteNotPerformed: string = 'Delete action is not performed!';
   protected messageDeleteNotPerformedRelatedDataExists: string = 'Delete action is not performed, related data exists!';
 
-  protected constructor( sortField: string, protected dataService: DataService<T>) {
-    this.sortField = sortField;
+  protected constructor( protected dataService: IDataService<T>) {
   }
 
   ngOnInit() {
@@ -51,7 +50,6 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   }
 
   public getPageData(event: any): void {
-    // this.isLoading = true;
     this.updatePaginationParameters(event);
     this.findByCriteria(true);
   }
