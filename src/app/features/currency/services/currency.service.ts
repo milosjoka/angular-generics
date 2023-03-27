@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {DataService, IDataService} from "../../../utility/services/data.service";
 import {CurrencyModel} from "../data-models/currency.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
+import {DataService, IDataService} from "../../../utility/generic-services/data.service";
 
 export interface ICurrencyService extends IDataService<CurrencyModel> {
   listAll(): Observable<CurrencyModel[]>;

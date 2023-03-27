@@ -1,6 +1,6 @@
 import {OnDestroy, OnInit} from "@angular/core";
 import {Subject, takeUntil} from "rxjs";
-import {IDataService} from "../services/data.service";
+import {IDataService} from "../generic-services/data.service";
 
 export interface SearchCriteria {
   offset: number;
