@@ -12,6 +12,16 @@ In this project you will see examples:
 - generic data(CRUD) service
 - generic BaseFormComponent and BaseIndexComponent. 
 
+## Generic data(CRUD) service
+On a path **"src/app/utility/data-models/responses/"** they are data models that refer to a standardized response from the backend service.
+
+On a path **"src/app/utility/services/data.service.ts"** is generic service that implement generic interface **IDataService**.
+
+On a path **"src/app/features/currency/services/currency.service.ts"** is generic service that implements generic ICurrencyService interface.
+Interface ICurrencyService extends interface IDataService. Implementation of IDataService is completed at **DataService** and this service  **CurrencyService** extends this service.
+On this way we are sure tha a currency service implements all methods from generic interface **IDataService** without adding extra code.
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 
 ## Development server
