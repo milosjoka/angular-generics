@@ -1,4 +1,16 @@
-# AngularGenerics
+# Angular - Generics
+
+Example how you can implement generics to your Angular application.
+Generics allow creating 'type variables' which can be used to create classes, functions & type aliases that don't need to explicitly define the types that they use.
+Generics makes it easier to write reusable code.
+
+Some benefits: 
+- Type safety
+- Less code and code is more easily reused
+
+In this project you will see:
+- generic data(CRUD) service
+- generic BaseFormComponent. 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 
