@@ -13,6 +13,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { CurrencyIndexComponent } from './features/currency/pages/currency-index/currency-index.component';
 import { CurrencyFormComponent } from './features/currency/pages/currency-form/currency-form.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

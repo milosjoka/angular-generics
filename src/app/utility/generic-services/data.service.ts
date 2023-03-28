@@ -30,7 +30,6 @@ export class DataService<T extends { id: number; }> implements IDataService<T> {
   }
 
   findByCriteria(searchCriteria: SearchCriteria): void {
-    console.log(`${environment.apiUrl}${this.endpoint}/find`);
     this.loadingSubject.next(true);
     this.http.post<PaginationResponse<T>>(`${environment.apiUrl}${this.endpoint}/find`,
       {

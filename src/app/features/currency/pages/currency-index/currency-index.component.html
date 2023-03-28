@@ -1,4 +1,11 @@
 <div class="mat-elevation-z8">
+  <mat-form-field class="example-form-field">
+    <mat-label>Search</mat-label>
+    <input matInput type="text" #searchInput>
+    <button *ngIf="selectedFilter != ''" matSuffix aria-label="Clear" (click)="clearFilter()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
   <div class="spinner-container" *ngIf="service.loading$ | async">
     <mat-spinner></mat-spinner>
   </div>

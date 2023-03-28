@@ -32,18 +32,10 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   }
 
   abstract initBreadCrumb(): void;
-
-  abstract displayColValue(columnName: string, item: T): string | number;
-
   abstract onAddNew(): void;
   abstract loadData(): void;
 
   abstract show(item: T): void;
-
-  protected onAddFilter(filter: string) {
-    this.selectedFilter = filter;
-    this.findByCriteria();
-  }
 
   protected getSearchCriteria(): SearchCriteria {
     return {
@@ -57,11 +49,6 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   protected findByCriteria() {
     const searchCriteria: SearchCriteria = this.getSearchCriteria();
     this.dataService.findByCriteria(searchCriteria);
-  }
-
-  protected clearSelectedFilter() {
-    this.selectedFilter = '';
-    this.findByCriteria();
   }
 
   protected delete(item: T) {
