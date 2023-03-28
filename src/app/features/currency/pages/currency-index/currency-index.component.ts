@@ -63,7 +63,7 @@ export class CurrencyIndexComponent extends BaseIndexComponent<Currency> impleme
     this.service.findByCriteria(searchCriteria);
   }
 
-  clearFilter() {
+  clearFilter(): void {
     this.searchInput.nativeElement.value = '';
     this.selectedFilter = '';
     this.paginator.pageIndex = 0;

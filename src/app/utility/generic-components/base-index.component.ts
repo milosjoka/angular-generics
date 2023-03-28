@@ -36,6 +36,7 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   abstract loadData(): void;
 
   abstract show(item: T): void;
+  abstract clearFilter(): void;
 
   protected getSearchCriteria(): SearchCriteria {
     return {
