@@ -1,6 +1,7 @@
-import {Component, OnDestroy} from "@angular/core";
-import {Subject, takeUntil} from "rxjs";
+import {AfterViewInit, Component, ElementRef, OnDestroy, ViewChild} from "@angular/core";
+import {debounceTime, distinctUntilChanged, fromEvent, Subject, takeUntil, tap} from "rxjs";
 import {DataService} from "../generic-services/data.service";
+import {MatPaginator} from "@angular/material/paginator";
 
 export interface SearchCriteria {
   pageIndex: number;
@@ -13,7 +14,11 @@ export interface SearchCriteria {
 @Component({
   template: ''
 })
-export abstract class BaseIndexComponent<T extends { id: number; }> implements OnDestroy {
+export abstract class BaseIndexComponent<T extends { id: number; }> implements OnDestroy, AfterViewInit {
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('searchInput') searchInput!: ElementRef;
+
   protected destroy$: Subject<boolean> = new Subject<boolean>();
   protected clearFilterInput$: Subject<string> = new Subject<string>();
   protected pageIndex: number = 0;
@@ -31,12 +36,21 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   protected constructor( protected dataService: DataService<T>) {
   }
 
-  abstract initBreadCrumb(): void;
   abstract onAddNew(): void;
-  abstract loadData(): void;
+  loadData(): void {
+    this.pageIndex = this.paginator?.pageIndex ?  this.paginator.pageIndex : 0;
+    this.pageSize = this.paginator?.pageSize ? this.paginator.pageSize : 5;
+    const searchCriteria = this.getSearchCriteria();
+    this.dataService.findByCriteria(searchCriteria);
+  };
 
   abstract show(item: T): void;
-  abstract clearFilter(): void;
+  clearFilter(): void {
+    this.searchInput.nativeElement.value = '';
+    this.selectedFilter = '';
+    this.paginator.pageIndex = 0;
+    this.loadData();
+  }
 
   protected getSearchCriteria(): SearchCriteria {
     return {
@@ -68,6 +82,24 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
       );
   }
 
+  ngAfterViewInit(): void {
+    fromEvent(this.searchInput.nativeElement,'keyup')
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.selectedFilter = this.searchInput.nativeElement.value;
+          this.loadData();
+        })
+      )
+      .subscribe();
+
+    this.paginator.page.pipe(
+      tap(() => this.loadData()),
+      takeUntil(this.destroy$)
+    ).subscribe()
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
