@@ -10,21 +10,21 @@ import {Currency} from "../../data-models/currency.model";
 })
 export class CurrencyIndexComponent extends BaseIndexComponent<Currency> implements OnInit {
 
-  public displayedColumns: string[] = ['id', 'name', 'symbol', 'exchangeRate'];
+  public displayedColumns: string[] = ['id', 'name', 'symbol', 'exchangeRate', 'cta'];
 
   constructor( public service: CurrencyService) {
     super(service);
   }
 
   ngOnInit(): void {
-    this.loadData();
+    this.onLoadData();
   }
 
   onAddNew(): void {
     throw new Error('Method not implemented.');
   }
 
-  show(item: Currency): void {
+  onShow(item: Currency): void {
     console.log(item);
   }
 }

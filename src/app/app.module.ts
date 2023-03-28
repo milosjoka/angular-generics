@@ -14,6 +14,7 @@ import { CurrencyIndexComponent } from './features/currency/pages/currency-index
 import { CurrencyFormComponent } from './features/currency/pages/currency-form/currency-form.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatIconModule} from "@angular/material/icon";
     MatSortModule,
     MatProgressSpinnerModule,
     AppRoutingModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -37,19 +37,19 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   }
 
   abstract onAddNew(): void;
-  loadData(): void {
+  onLoadData(): void {
     this.pageIndex = this.paginator?.pageIndex ?  this.paginator.pageIndex : 0;
     this.pageSize = this.paginator?.pageSize ? this.paginator.pageSize : 5;
     const searchCriteria = this.getSearchCriteria();
     this.dataService.findByCriteria(searchCriteria);
   };
 
-  abstract show(item: T): void;
-  clearFilter(): void {
+  abstract onShow(item: T): void;
+  onClearFilter(): void {
     this.searchInput.nativeElement.value = '';
     this.selectedFilter = '';
     this.paginator.pageIndex = 0;
-    this.loadData();
+    this.onLoadData();
   }
 
   protected getSearchCriteria(): SearchCriteria {
@@ -61,12 +61,12 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
       filter: this.selectedFilter
     };
   }
-  protected findByCriteria() {
+  protected onFindByCriteria() {
     const searchCriteria: SearchCriteria = this.getSearchCriteria();
     this.dataService.findByCriteria(searchCriteria);
   }
 
-  protected delete(item: T) {
+  protected onDelete(item: T) {
     this.dataService.delete(item.id)
       .pipe(
         takeUntil(this.destroy$)
@@ -74,7 +74,7 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
       .subscribe(
         () => {
           console.log(this.messageSuccessfullyDeleted);
-          this.findByCriteria();
+          this.onFindByCriteria();
         },
         errorResponse => {
           console.error('Error', errorResponse)
@@ -90,13 +90,13 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
         tap(() => {
           this.paginator.pageIndex = 0;
           this.selectedFilter = this.searchInput.nativeElement.value;
-          this.loadData();
+          this.onLoadData();
         })
       )
       .subscribe();
 
     this.paginator.page.pipe(
-      tap(() => this.loadData()),
+      tap(() => this.onLoadData()),
       takeUntil(this.destroy$)
     ).subscribe()
   }
