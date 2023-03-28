@@ -8,14 +8,22 @@ import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
+import {MatGridListModule} from '@angular/material/grid-list';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { CurrencyIndexComponent } from './features/currency/pages/currency-index/currency-index.component';
+import { CurrencyFormComponent } from './features/currency/pages/currency-form/currency-form.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CurrencyIndexComponent,
+    CurrencyFormComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MatGridListModule,
     HttpClientModule,
     MatInputModule,
     MatPaginatorModule,
