@@ -1,0 +1,20 @@
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header header'
+    'left-menu content content right-menu'
+    'footer footer footer footer';
+  gap: 10px;
+  padding: 10px;
+}
+
+.grid-container > div {
+  padding: 20px 0;
+  font-size: 30px;
+}
+
+.header { grid-area: header; }
+.left-menu { grid-area: left-menu; }
+.right-menu { grid-area: right-menu; }
+.content { grid-area: content; }
+.footer { grid-area: footer; }
