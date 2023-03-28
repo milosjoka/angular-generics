@@ -1,8 +1,11 @@
-import {OnDestroy, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Subject, takeUntil} from "rxjs";
 import {FormGroup} from "@angular/forms";
 import {DataService} from "../generic-services/data.service";
 
+@Component({
+  template: ''
+})
 export abstract class BaseFormComponent<T extends { id: number; }> implements OnInit, OnDestroy {
   protected destroy$: Subject<boolean> = new Subject<boolean>();
   public item!: T;

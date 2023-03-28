@@ -1,27 +1,26 @@
-import {OnDestroy, OnInit} from "@angular/core";
+import {Component, OnDestroy} from "@angular/core";
 import {Subject, takeUntil} from "rxjs";
-import {IDataService} from "../generic-services/data.service";
+import {DataService} from "../generic-services/data.service";
 
 export interface SearchCriteria {
-  offset: number;
-  rows: number;
+  pageIndex: number;
+  pageSize: number;
   sortField: string;
   sortOrder: number;
   filter: string;
 }
 
-export abstract class BaseIndexComponent<T extends { id: number; }> implements OnInit, OnDestroy {
+@Component({
+  template: ''
+})
+export abstract class BaseIndexComponent<T extends { id: number; }> implements OnDestroy {
   protected destroy$: Subject<boolean> = new Subject<boolean>();
   protected clearFilterInput$: Subject<string> = new Subject<string>();
-
-  protected items: T[] = [];
-  protected totalRecords: number = 0;
-  private isLoading: boolean = false;
-  protected offset: number = 0;
-  private rowsPerPage: number = 10;
+  protected pageIndex: number = 0;
+  protected pageSize: number = 5;
   protected sortField: string = 'id';
   protected sortOrder: number = 1;
-  private selectedFilter: string = '';
+  protected selectedFilter: string = '';
 
   protected messageSuccessfullySaved: string = 'Data successfully saved!';
   protected messageSuccessfullyDeleted: string = 'Data successfully deleted!';
@@ -29,67 +28,40 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   protected messageDeleteNotPerformed: string = 'Delete action is not performed!';
   protected messageDeleteNotPerformedRelatedDataExists: string = 'Delete action is not performed, related data exists!';
 
-  protected constructor( protected dataService: IDataService<T>) {
+  protected constructor( protected dataService: DataService<T>) {
   }
-
-  ngOnInit() {
-  }
-
 
   abstract initBreadCrumb(): void;
 
   abstract displayColValue(columnName: string, item: T): string | number;
 
   abstract onAddNew(): void;
+  abstract loadData(): void;
 
   abstract show(item: T): void;
 
   protected onAddFilter(filter: string) {
     this.selectedFilter = filter;
-    this.findByCriteria(false);
+    this.findByCriteria();
   }
 
-  public getPageData(event: any): void {
-    this.updatePaginationParameters(event);
-    this.findByCriteria(true);
-  }
-
-  protected getSearchCriteria(isPagination: boolean): SearchCriteria {
+  protected getSearchCriteria(): SearchCriteria {
     return {
-      offset: isPagination ? this.offset : 0,
-      rows: this.rowsPerPage,
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
       sortField: this.sortField,
       sortOrder: this.sortOrder,
       filter: this.selectedFilter
     };
   }
-
-  protected updatePaginationParameters(event: any) {
-    this.offset = event.first;
-    this.rowsPerPage = event.rowsPerPage;
-    this.sortField = event.sortField;
-    this.sortOrder = event.sortOrder;
+  protected findByCriteria() {
+    const searchCriteria: SearchCriteria = this.getSearchCriteria();
+    this.dataService.findByCriteria(searchCriteria);
   }
 
-  protected findByCriteria(isPagination: boolean =  false) {
-    this.isLoading = true;
-    const searchCriteria: SearchCriteria = this.getSearchCriteria(isPagination);
-    this.dataService.findByCriteria(searchCriteria)
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(
-        (response) => {
-          this.items = response.data.items;
-          this.totalRecords = response.data.resourceTotalCount;
-          this.isLoading = false;
-        }
-      );
-  }
-
-  protected clearSelectedFilter(field: string) {
+  protected clearSelectedFilter() {
     this.selectedFilter = '';
-    this.findByCriteria(false);
+    this.findByCriteria();
   }
 
   protected delete(item: T) {
@@ -100,8 +72,7 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
       .subscribe(
         () => {
           console.log(this.messageSuccessfullyDeleted);
-          this.isLoading = true;
-          this.findByCriteria(false);
+          this.findByCriteria();
         },
         errorResponse => {
           console.error('Error', errorResponse)
