@@ -10,7 +10,7 @@ Some benefits:
 
 In this project you will see examples:
 - generic data(CRUD) service
-- generic BaseFormComponent and BaseIndexComponent. 
+- generic BaseFormComponent and BaseIndexComponent
 
 ## Generic data(CRUD) service
 On a path **"src/app/utility/data-models/responses/"** they are data models that refer to a standardized response from the backend service.
@@ -21,6 +21,9 @@ On a path **"src/app/features/currency/services/currency.service.ts"** is generi
 Interface ICurrencyService extends interface IDataService. Implementation of IDataService is completed at **DataService** and this service  **CurrencyService** extends this service.
 On this way we are sure tha a currency service implements all methods from generic interface **IDataService** without adding extra code.
 
+## Generic BaseFormComponent and BaseIndexComponent
+Extending BaseFormComponent and BaseIndexComponent easily with little code, you can add new pages.
+CurrencyFormComponent and CurrencyIndexComponent are simple implementations just for demonstration and getting ideas.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 
