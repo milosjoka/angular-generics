@@ -1,1 +1,31 @@
-<p>currency-form works!</p>
+<h1 mat-dialog-title>Currency</h1>
+
+<div mat-dialog-content [formGroup]="form">
+
+  <mat-form-field class="full-width">
+    <mat-label>ID</mat-label>
+    <input matInput
+           formControlName="id">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput
+           formControlName="name">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Symbol</mat-label>
+    <input matInput
+           formControlName="symbol">
+  </mat-form-field>
+  <mat-form-field class="exchangeRate">
+    <mat-label>Exchange rate</mat-label>
+    <input matInput
+           formControlName="exchangeRate">
+  </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button class="mat-raised-button mat-accent" (click)="onCancel()">Cancel</button>
+  <button mat-button class="mat-raised-button mat-primary" (click)="onSubmit()">Save</button>
+</div>

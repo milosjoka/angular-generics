@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Subject, takeUntil} from "rxjs";
 import {FormGroup} from "@angular/forms";
 import {DataService} from "../generic-services/data.service";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   template: ''
@@ -10,6 +11,8 @@ export abstract class BaseFormComponent<T extends { id: number; }> implements On
   protected destroy$: Subject<boolean> = new Subject<boolean>();
   public item!: T;
   public form!: FormGroup;
+
+  protected dialogRef!: MatDialogRef<any>
 
   protected constructor(protected dataService: DataService<T>) {
   }
@@ -23,7 +26,7 @@ export abstract class BaseFormComponent<T extends { id: number; }> implements On
 
   abstract patchFormValue(): void;
 
-  public onSubmit() {
+  public submit() {
     const item: T = this.form.getRawValue();
     if (this.isUpdateAction(item)) {
       this.update(item);
@@ -43,10 +46,11 @@ export abstract class BaseFormComponent<T extends { id: number; }> implements On
       )
       .subscribe(() => {
           console.log('Item updated!');
-          // this.ref.close(isSaved);
+          this.dialogRef.close(true);
         },
         errorResponse => {
           console.error('Error', errorResponse)
+          this.dialogRef.close(false);
         }
       );
   }
@@ -59,16 +63,17 @@ export abstract class BaseFormComponent<T extends { id: number; }> implements On
       .subscribe(
         () => {
           console.log('Item created!');
-          // this.ref.close(isSaved);
+          this.dialogRef.close(true);
         },
         errorResponse => {
           console.error('Error', errorResponse)
+          this.dialogRef.close(false);
         });
   }
 
-  public onCancel() {
+  public cancel() {
     console.log('Action canceled!');
-    // this.ref.close(isSaved);
+    this.dialogRef.close(false);
   }
 
   ngOnDestroy(): void {

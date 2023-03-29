@@ -33,7 +33,9 @@ export abstract class BaseIndexComponent<T extends { id: number; }> implements O
   protected messageDeleteNotPerformed: string = 'Delete action is not performed!';
   protected messageDeleteNotPerformedRelatedDataExists: string = 'Delete action is not performed, related data exists!';
 
-  protected constructor( protected dataService: DataService<T>) {
+  protected constructor(
+    protected dataService: DataService<T>
+  ) {
   }
 
   abstract onAddNew(): void;

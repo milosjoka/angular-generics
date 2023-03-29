@@ -15,6 +15,8 @@ import { CurrencyFormComponent } from './features/currency/pages/currency-form/c
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,20 +24,22 @@ import {MatButtonModule} from "@angular/material/button";
     CurrencyIndexComponent,
     CurrencyFormComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatGridListModule,
-    HttpClientModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
-    AppRoutingModule,
-    MatIconModule,
-    MatButtonModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatGridListModule,
+        HttpClientModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        AppRoutingModule,
+        MatIconModule,
+        MatButtonModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
